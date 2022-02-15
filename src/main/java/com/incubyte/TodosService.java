@@ -21,6 +21,7 @@ public class TodosService {
     }
 
     public Todo update(Todo todo) {
+        todo.setStatus(Status.CLOSED);
         return todosRepository.update(todo);
     }
 }
