@@ -116,4 +116,23 @@ class TodosControllerTest {
         assertThat(updatedTodo.get("title")).isEqualTo("Remember eggs");
         assertThat(updatedTodo.get("status")).isEqualTo("CLOSED");
     }
+
+    @Test
+    public void should_retrieve_todos_with_closed_status() {
+
+        Map<String, String> todo = new HashMap<>();
+        todo.put("title", "Complete closed status endpoint");
+        todo.put("status", "CLOSED");
+
+        Map<String, String> response =
+                client.toBlocking().retrieve(HttpRequest.POST("/todos", todo), Argument.mapOf(String.class, String.class));
+
+        assertThat(response.get("title")).isEqualTo("Complete closed status endpoint");
+        assertThat(response.get("status")).isEqualTo("CLOSED");
+
+        List<Map> closedTodos =
+                client.toBlocking().retrieve(HttpRequest.GET("/todos/closed"), Argument.listOf(Map.class));
+
+        assertThat(closedTodos.size()).isGreaterThan(0);
+    }
 }

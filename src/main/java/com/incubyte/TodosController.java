@@ -29,6 +29,11 @@ public class TodosController {
         return todosService.getTodos(Status.OPEN);
     }
 
+    @Get("/closed")
+    public List<Todo> closed() {
+        return todosService.getTodos(Status.CLOSED);
+    }
+
     @Patch
     public Todo update(@Body Todo todo) {
         return todosService.update(todo);

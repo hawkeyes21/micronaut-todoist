@@ -40,6 +40,16 @@ class TodosServiceShould {
   }
 
   @Test
+  void find_todos_by_closed_status() {
+    //        Arrange
+    TodosService todosService = new TodosService(todosRepository);
+    //        Act
+    todosService.getTodos(Status.CLOSED);
+    //        ASsert
+    verify(todosRepository).findByStatusOrderById(Status.CLOSED);
+  }
+
+  @Test
   public void update_an_open_todo_as_closed() {
     TodosService todosService = new TodosService(todosRepository);
     Todo todo = new Todo("Title", Status.OPEN);
@@ -48,5 +58,7 @@ class TodosServiceShould {
 
     verify(todosRepository).update(todo);
   }
+
+
 
 }
